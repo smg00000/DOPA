@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fundamentos de HTML — Presentación</title>
+    <meta name="description" content="Presentación didáctica sobre fundamentos de HTML con accesibilidad, navegación por hash, progreso y tema oscuro. Archivo único y sin dependencias."/>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cpath fill='%233498db' d='M19 10h90l-8 96-37 12-37-12z'/%3E%3Cpath fill='%23fff' d='M64 108l30-10 7-78H64z'/%3E%3Cpath fill='%23e6e6e6' d='M64 108V20H26l7 78z'/%3E%3Ctext x='50' y='84' font-size='54' font-family='monospace' fill='%232c3e50'%3EHTML%3C/text%3E%3C/svg%3E"/>
+    <style>
+        /* ========== Variables y resets ========== */
+        :root{
+            --bg:#f9f9fb; --fg:#333; --primary:#3498db; --primary-600:#2980b9;
+            --muted:#95a5a6; --panel:#fff; --code-bg:#f1f8ff; --radius:20px;
+            --shadow:0 8px 30px rgba(0,0,0,.08);
+            --border:#e6e8eb; --ok:#2ecc71; --ok-600:#27ae60;
+        }
+        @media (prefers-color-scheme: dark){
+            :root:not([data-theme="light"]){ --bg:#0e1116; --fg:#e7e7e7; --panel:#121722; --code-bg:#0d2033; --muted:#9aa4ad; --border:#273244; --shadow:0 8px 30px rgba(0,0,0,.5); }
+        }
+        :root[data-theme="dark"]{ color-scheme: dark; --bg:#0e1116; --fg:#e7e7e7; --panel:#121722; --code-bg:#0d2033; --muted:#9aa4ad; --border:#273244; --shadow:0 8px 30px rgba(0,0,0,.5); }
+        :root[data-theme="light"]{ color-scheme: light; }
+        *{ box-sizing: border-box }
+        html{ color-scheme: light dark }
+        body{
+            margin:0; background:var(--bg); color:var(--fg);
+            min-height:100dvh; display:flex; flex-direction:column; gap:1rem;
+            padding:1rem; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            font-size: clamp(16px, 1.2vw + 0.2rem, 18px);
+        }
+
+        /* ========== Enlaces de salto ========== */
+        .skip-to-content{
+            position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+        }
+        .skip-to-content:focus{
+            left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; background:#000; color:#fff; border-radius:.5rem; z-index:999;
+        }
+
+        /* ========== Cabecera y controles globales ========== */
+        .site-header{ width:min(1000px, 96%); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem }
+        .site-header h1{ font-size: clamp(1.6rem, 2.2vw + .5rem, 2.4rem); margin:0; color: color-mix(in oklab, var(--fg) 80%, #000) }
+
+        .toolbar{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap }
+        .toolbar button{
+            background:var(--primary); color:white; border:0; padding:.55rem .9rem; border-radius:.6rem; font-weight:600; cursor:pointer;
+            box-shadow:0 4px 6px color-mix(in oklab, var(--primary) 30%, transparent);
+        }
+        .toolbar button:hover{ background:var(--primary-600) }
+        .toolbar button:disabled{ opacity:.5; cursor:not-allowed }
+        .toolbar button:focus-visible{ outline:3px solid color-mix(in oklab, var(--primary) 60%, white); outline-offset:2px }
+
+        .progress-wrap{ width:min(1000px, 96%); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:.75rem }
+        .progress{ display:flex; align-items:center; gap:.75rem }
+        .progress-bar{ width:220px; height:8px; background:color-mix(in oklab, var(--panel) 70%, #dfe6ee); border:1px solid var(--border); border-radius:999px; position:relative; overflow:hidden }
+        .progress-bar > .fill{ position:absolute; inset:0; width:0%; height:100%; background:var(--primary); transition: width .25s ease }
+        .counter{ font-variant-numeric: tabular-nums; color:var(--muted) }
+
+        /* ========== Slides ========== */
+        main{ outline:none }
+        .slide{
+            background:var(--panel); width:min(900px, 95%); min-height:580px; margin-inline:auto;
+            padding:clamp(24px, 4vw, 50px); border-radius:var(--radius);
+            box-shadow:var(--shadow); display:none; flex-direction:column; position:relative; border:1px solid var(--border);
+        }
+        .slide.active{ display:flex }
+        .slide[inert]{ pointer-events:none }
+
+        .slide .slide-number{ position:absolute; top:22px; right:26px; font-size:1rem; color:var(--muted); font-weight:500 }
+        .center{ text-align:center; margin-top:120px }
+
+        h2{ font-size: clamp(1.3rem, 1.4vw + .8rem, 1.9rem); margin: 18px 0 12px; color:#3498db }
+        h3{ margin:12px 0 8px }
+        p, li{ font-size:1.05rem; line-height:1.7; margin-bottom:12px; color: color-mix(in oklab, var(--fg) 90%, #000 10%) }
+        ul, ol{ padding-left:28px; margin: 12px 0 }
+        code{ background: var(--code-bg); padding: 2px 8px; border-radius: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color: #e74c3c; border: 1px solid color-mix(in oklab, var(--code-bg) 60%, var(--border) 40%) }
+        pre{ background: color-mix(in oklab, var(--panel) 90%, #000 10%); padding: 18px; border-radius: 12px; overflow-x: auto; margin: 14px 0; font-size: 1rem; color:#2c3e50; border:1px solid var(--border); position:relative }
+        :root[data-theme="dark"] pre, :root:not([data-theme="light"]) pre { color:#dfe7ef }
+
+        .example-box{ background: color-mix(in oklab, var(--primary) 8%, var(--panel)); border-left: 4px solid var(--primary); padding: 16px; margin: 14px 0; border-radius: 0 8px 8px 0 }
+        .example-title{ font-weight: 700; color: #2c3e50; margin-bottom: 8px; display: block }
+
+        .rendered-example{ background: var(--panel); padding: 16px; border-radius: 10px; margin: 12px 0; border: 1px solid var(--border) }
+        .rendered-example h3{ color: #3498db; margin-bottom: 8px }
+        .rendered-example ul, .rendered-example ol{ margin-left: 18px }
+        .rendered-example img{ max-width: 100%; height: auto; margin: 8px 0 }
+        .rendered-example table{ width: 100%; border-collapse: collapse; margin: 12px 0 }
+        .rendered-example th, .rendered-example td{ border: 1px solid var(--border); padding: 10px; text-align: left }
+        .rendered-example th{ background-color: color-mix(in oklab, var(--primary) 8%, var(--panel)); font-weight: bold }
+        .rendered-example form{ display: flex; flex-direction: column; gap: 12px }
+        .rendered-example input, .rendered-example textarea, .rendered-example select{ padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color:var(--fg) }
+        .rendered-example input[type="submit"], .rendered-example input[type="reset"]{ background: var(--ok); color: white; border: none; padding: 10px 14px; cursor: pointer; width: fit-content; border-radius:8px }
+        .rendered-example input[type="submit"]:hover{ background: var(--ok-600) }
+
+        .highlight{ color:#e74c3c; font-weight:600 }
+
+        /* botón copiar código dentro de pre */
+        .copy-btn{ position:absolute; right:12px; top:12px; background:var(--primary); color:#fff; border:0; border-radius:8px; padding:.35rem .6rem; font-size:.9rem; cursor:pointer }
+        .copy-btn:hover{ background:var(--primary-600) }
+
+        /* ========== Impresión ========== */
+        @media print{
+            body{ background:#fff; padding:0 }
+            .site-header, .toolbar, .progress-wrap, .skip-to-content{ display:none !important }
+            .slide{ display:block; width:auto; box-shadow:none; border:1px solid #ddd; page-break-after:always }
+        }
+
+        @media (prefers-reduced-motion: reduce){
+            *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+        }
+    </style>
+</head>
+<body>
+<a class="skip-to-content" href="#slides">Saltar a contenido</a>
+
+<header class="site-header" aria-label="Cabecera de la presentación">
+    <h1>Fundamentos de HTML</h1>
+    <div class="toolbar" role="group" aria-label="Controles">
+        <button type="button" class="btn-prev" aria-label="Diapositiva anterior">Anterior</button>
+        <button type="button" class="btn-next" aria-label="Diapositiva siguiente">Siguiente</button>
+        <button type="button" id="themeToggle" aria-pressed="false" aria-label="Cambiar tema">Tema</button>
+    </div>
+</header>
+
+<div class="progress-wrap">
+    <div class="progress" aria-hidden="false" aria-label="Progreso de la presentación">
+        <div class="progress-bar" aria-hidden="true"><div class="fill" style="width:0%"></div></div>
+        <span class="counter"><span id="current">1</span> / <span id="total">20</span></span>
+    </div>
+</div>
+
+<main id="slides" tabindex="-1">
+    <!-- ========== Diapositiva 1 ========== -->
+    <section class="slide active" id="slide1" role="group" aria-roledescription="slide" aria-label="Fundamentos de HTML: Estructura, Contenido e Interacción" aria-current="true">
+        <div class="slide-number">1 / 20</div>
+        <h2 style="text-align:center; font-size:2rem">Fundamentos de HTML: Estructura, Contenido e Interacción</h2>
+        <p class="center">Una guía basada en los conceptos clave de lenguajes de marcas.</p>
+    </section>
+
+    <!-- ========== Diapositiva 2 ========== -->
+    <section class="slide" id="slide2" role="group" aria-roledescription="slide" aria-label="Introducción a HTML" aria-hidden="true">
+        <div class="slide-number">2 / 20</div>
+        <h2>Introducción a HTML</h2>
+        <p><span class="highlight">¿Qué es HTML?</span></p>
+        <ul>
+            <li>HTML (Lenguaje de Marcas de Hipertexto) es la base para dotar de contenido a una página web.</li>
+            <li>Utiliza un sistema de <span class="highlight">marcas (etiquetas)</span> para definir el formato, las partes del documento y las referencias.</li>
+        </ul>
+        <p><span class="highlight">Importancia de los Estándares</span></p>
+        <ul>
+            <li>Seguir los estándares de HTML asegura que los navegadores interpreten y muestren la información correctamente.</li>
+        </ul>
+    </section>
+
+    <!-- ========== Diapositiva 3 ========== -->
+    <section class="slide" id="slide3" role="group" aria-roledescription="slide" aria-label="Estructura básica de un documento HTML" aria-hidden="true">
+        <div class="slide-number">3 / 20</div>
+        <h2>Estructura Básica de un Documento HTML</h2>
+        <p>Toda página web comienza con esta estructura esencial:</p>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Mi Página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;¡Hola, mundo!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+
+    <!-- ========== Diapositiva 4 ========== -->
+    <section class="slide" id="slide4" role="group" aria-roledescription="slide" aria-label="La cabecera" aria-hidden="true">
+        <div class="slide-number">4 / 20</div>
+        <h2>La Cabecera (<code>&lt;head&gt;</code>)</h2>
+        <p>Contiene metadatos esenciales:</p>
+        <ul>
+            <li><code>&lt;title&gt;</code>: Título en la pestaña del navegador.</li>
+            <li><code>&lt;meta charset="UTF-8"&gt;</code>: Codificación de caracteres.</li>
+            <li><code>&lt;meta name="description"&gt;</code>: Descripción para SEO.</li>
+            <li><code>&lt;link rel="stylesheet"&gt;</code>: Enlaza CSS.</li>
+        </ul>
+        <div class="example-box">
+            <span class="example-title">Ejemplo práctico:</span>
+            <pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Blog de Tecnología&lt;/title&gt;
+  &lt;meta name="description" content="Artículos sobre desarrollo web"&gt;
+  &lt;link rel="stylesheet" href="estilos.css"&gt;
+&lt;/head&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 5 ========== -->
+    <section class="slide" id="slide5" role="group" aria-roledescription="slide" aria-label="El cuerpo" aria-hidden="true">
+        <div class="slide-number">5 / 20</div>
+        <h2>El Cuerpo (<code>&lt;body&gt;</code>)</h2>
+        <p>Aquí va todo el contenido visible:</p>
+        <ul>
+            <li>Texto, imágenes, enlaces, formularios, etc.</li>
+            <li>Organizado con etiquetas semánticas como <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>.</li>
+        </ul>
+        <div class="example-box">
+            <span class="example-title">Ejemplo de contenido:</span>
+            <pre><code>&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Mi Sitio Web&lt;/h1&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;p&gt;Este es el contenido principal.&lt;/p&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;p&gt;© 2024&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 6 ========== -->
+    <section class="slide" id="slide6" role="group" aria-roledescription="slide" aria-label="Encabezados y párrafos" aria-hidden="true">
+        <div class="slide-number">6 / 20</div>
+        <h2>Encabezados y Párrafos</h2>
+        <div class="rendered-example">
+            <h3>Ejemplo renderizado:</h3>
+            <h1>Título Principal (h1)</h1>
+            <h2>Subtítulo Importante (h2)</h2>
+            <p>Este es un párrafo de ejemplo. Los párrafos se definen con la etiqueta <code>&lt;p&gt;</code>.</p>
+            <h3>Sección Menor (h3)</h3>
+            <p>Otro párrafo con más detalles.</p>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;h1&gt;Título Principal (h1)&lt;/h1&gt;
+&lt;h2&gt;Subtítulo Importante (h2)&lt;/h2&gt;
+&lt;p&gt;Este es un párrafo de ejemplo...&lt;/p&gt;
+&lt;h3&gt;Sección Menor (h3)&lt;/h3&gt;
+&lt;p&gt;Otro párrafo con más detalles.&lt;/p&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 7 ========== -->
+    <section class="slide" id="slide7" role="group" aria-roledescription="slide" aria-label="Listas" aria-hidden="true">
+        <div class="slide-number">7 / 20</div>
+        <h2>Listas</h2>
+        <div class="rendered-example">
+            <h3>Lista Ordenada (ol):</h3>
+            <ol>
+                <li>Primer paso</li>
+                <li>Segundo paso</li>
+                <li>Tercer paso</li>
+            </ol>
+            <h3>Lista No Ordenada (ul):</h3>
+            <ul>
+                <li>Manzanas</li>
+                <li>Plátanos</li>
+                <li>Naranjas</li>
+            </ul>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;ol&gt;
+  &lt;li&gt;Primer paso&lt;/li&gt;
+  &lt;li&gt;Segundo paso&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+  &lt;li&gt;Manzanas&lt;/li&gt;
+  &lt;li&gt;Plátanos&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 8 ========== -->
+    <section class="slide" id="slide8" role="group" aria-roledescription="slide" aria-label="Formato de texto" aria-hidden="true">
+        <div class="slide-number">8 / 20</div>
+        <h2>Formato de Texto</h2>
+        <div class="rendered-example">
+            <p>Texto normal, <strong>texto en negrita (strong)</strong>, <em>texto en cursiva (em)</em>, <mark>texto resaltado (mark)</mark>, <b>negrita sin énfasis (b)</b>, <i>cursiva sin énfasis (i)</i>.</p>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;p&gt;Texto normal, &lt;strong&gt;texto en negrita&lt;/strong&gt;,
+&lt;em&gt;texto en cursiva&lt;/em&gt;, &lt;mark&gt;texto resaltado&lt;/mark&gt;,
+&lt;b&gt;negrita sin énfasis&lt;/b&gt;, &lt;i&gt;cursiva sin énfasis&lt;/i&gt;.&lt;/p&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 9 ========== -->
+    <section class="slide" id="slide9" role="group" aria-roledescription="slide" aria-label="Enlaces" aria-hidden="true">
+        <div class="slide-number">9 / 20</div>
+        <h2>Enlaces</h2>
+        <div class="rendered-example">
+            <p>Visita <a href="https://www.mozilla.org" target="_blank" rel="noopener noreferrer">Mozilla Developer Network</a> para aprender más.</p>
+            <p>Enlace interno: <a href="#/10">Ir a la diapositiva 10</a></p>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;a href="https://www.mozilla.org" target="_blank" rel="noopener noreferrer"&gt;
+  Mozilla Developer Network
+&lt;/a&gt;
+&lt;a href="#/10"&gt;Ir a la diapositiva 10&lt;/a&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 10 ========== -->
+    <section class="slide" id="slide10" role="group" aria-roledescription="slide" aria-label="Imágenes" aria-hidden="true">
+        <div class="slide-number">10 / 20</div>
+        <h2>Imágenes</h2>
+        <div class="rendered-example">
+            <p>Imagen de ejemplo (usando placeholder):</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/USAF_F-16C_Profile.jpg/1280px-USAF_F-16C_Profile.jpg" alt="Imagen de ejemplo">
+            <p>Texto alternativo: "Imagen de ejemplo"</p>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;img src="imagen.jpg" alt="Descripción de la imagen"&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 11 ========== -->
+    <section class="slide" id="slide11" role="group" aria-roledescription="slide" aria-label="Tablas" aria-hidden="true">
+        <div class="slide-number">11 / 20</div>
+        <h2>Tablas</h2>
+        <div class="rendered-example">
+            <table>
+                <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Portátil</td>
+                    <td>$999</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>Mouse</td>
+                    <td>$25</td>
+                    <td>50</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Producto&lt;/th&gt;
+      &lt;th&gt;Precio&lt;/th&gt;
+      &lt;th&gt;Stock&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Portátil&lt;/td&gt;
+      &lt;td&gt;$999&lt;/td&gt;
+      &lt;td&gt;15&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 12 ========== -->
+    <section class="slide" id="slide12" role="group" aria-roledescription="slide" aria-label="Formularios básicos" aria-hidden="true">
+        <div class="slide-number">12 / 20</div>
+        <h2>Formularios Básicos</h2>
+        <div class="rendered-example">
+            <form>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="tu@email.com" autocomplete="email" required>
+
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" rows="3" placeholder="Escribe tu mensaje" autocomplete="off"></textarea>
+
+                <input type="submit" value="Enviar">
+                <input type="reset" value="Borrar">
+            </form>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;form&gt;
+  &lt;label for="nombre"&gt;Nombre:&lt;/label&gt;
+  &lt;input type="text" id="nombre" required autocomplete="name"&gt;
+
+  &lt;label for="email"&gt;Email:&lt;/label&gt;
+  &lt;input type="email" id="email" required autocomplete="email"&gt;
+
+  &lt;label for="mensaje"&gt;Mensaje:&lt;/label&gt;
+  &lt;textarea id="mensaje" rows="3"&gt;&lt;/textarea&gt;
+
+  &lt;input type="submit" value="Enviar"&gt;
+  &lt;input type="reset" value="Borrar"&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 13 ========== -->
+    <section class="slide" id="slide13" role="group" aria-roledescription="slide" aria-label="Campos de selección" aria-hidden="true">
+        <div class="slide-number">13 / 20</div>
+        <h2>Campos de Selección</h2>
+        <div class="rendered-example">
+            <form>
+                <p><strong>Selecciona tu color favorito:</strong></p>
+                <label><input type="radio" name="color" value="rojo"> Rojo</label><br>
+                <label><input type="radio" name="color" value="azul"> Azul</label><br>
+                <label><input type="radio" name="color" value="verde"> Verde</label>
+
+                <p><strong>Selecciona tus hobbies:</strong></p>
+                <label><input type="checkbox" name="hobby" value="leer"> Leer</label><br>
+                <label><input type="checkbox" name="hobby" value="musica"> Música</label><br>
+                <label><input type="checkbox" name="hobby" value="deporte"> Deporte</label>
+
+                <p><strong>País:</strong></p>
+                <select>
+                    <option>España</option>
+                    <option>México</option>
+                    <option>Argentina</option>
+                </select>
+            </form>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;input type="radio" name="color" value="rojo"&gt; Rojo
+&lt;input type="checkbox" name="hobby" value="leer"&gt; Leer
+&lt;select&gt;
+  &lt;option&gt;España&lt;/option&gt;
+  &lt;option&gt;México&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 14 ========== -->
+    <section class="slide" id="slide14" role="group" aria-roledescription="slide" aria-label="Divs y contenedores" aria-hidden="true">
+        <div class="slide-number">14 / 20</div>
+        <h2>Divs y Contenedores</h2>
+        <p>El elemento <code>&lt;div&gt;</code> es un contenedor genérico para agrupar elementos:</p>
+        <div class="rendered-example">
+            <div class="box-info">
+                <h3>Sección 1</h3>
+                <p>Contenido dentro de un div.</p>
+            </div>
+            <div class="box-note">
+                <h3>Sección 2</h3>
+                <p>Otro bloque de contenido.</p>
+            </div>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;div&gt;
+  &lt;h3&gt;Sección 1&lt;/h3&gt;
+  &lt;p&gt;Contenido...&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+  &lt;h3&gt;Sección 2&lt;/h3&gt;
+  &lt;p&gt;Otro bloque...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 15 ========== -->
+    <section class="slide" id="slide15" role="group" aria-roledescription="slide" aria-label="Texto preformateado" aria-hidden="true">
+        <div class="slide-number">15 / 20</div>
+        <h2>Texto Preformateado</h2>
+        <p>La etiqueta <code>&lt;pre&gt;</code> conserva espacios y saltos de línea:</p>
+        <div class="rendered-example">
+        <pre>Este texto
+  mantiene
+    su formato
+      original.</pre>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;pre&gt;
+Este texto
+  mantiene
+    su formato
+      original.
+&lt;/pre&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 16 ========== -->
+    <section class="slide" id="slide16" role="group" aria-roledescription="slide" aria-label="Enlaces internos" aria-hidden="true">
+        <div class="slide-number">16 / 20</div>
+        <h2>Enlaces Internos</h2>
+        <p>Los enlaces pueden apuntar a secciones dentro de la misma página usando IDs:</p>
+        <div class="rendered-example">
+            <p><a href="#seccion1">Ir a Sección 1</a> | <a href="#seccion2">Ir a Sección 2</a></p>
+            <div id="seccion1" style="margin-top:20px; padding:15px; background:#e8f5e9; border-radius:8px; color:#1b5e20">
+                <h3>Sección 1</h3>
+                <p>Contenido de la sección 1.</p>
+            </div>
+            <div id="seccion2" style="margin-top:20px; padding:15px; background:#fff3e0; border-radius:8px; color:#e65100">
+                <h3>Sección 2</h3>
+                <p>Contenido de la sección 2.</p>
+            </div>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;a href="#seccion1"&gt;Ir a Sección 1&lt;/a&gt;
+&lt;div id="seccion1"&gt;...&lt;/div&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 17 ========== -->
+    <section class="slide" id="slide17" role="group" aria-roledescription="slide" aria-label="Metadatos avanzados" aria-hidden="true">
+        <div class="slide-number">17 / 20</div>
+        <h2>Metadatos Avanzados</h2>
+        <p>Ejemplos de metadatos útiles en el <code>&lt;head&gt;</code>:</p>
+        <div class="example-box">
+        <pre><code>&lt;!-- Vista móvil --&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+
+&lt;!-- Descripción para SEO --&gt;
+&lt;meta name="description" content="Aprende HTML desde cero"&gt;
+
+&lt;!-- Palabras clave (menos relevante hoy) --&gt;
+&lt;meta name="keywords" content="HTML, web, desarrollo"&gt;
+
+&lt;!-- Autor --&gt;
+&lt;meta name="author" content="Tu Nombre"&gt;
+
+&lt;!-- Icono de la página --&gt;
+&lt;link rel="icon" href="favicon.ico"&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 18 ========== -->
+    <section class="slide" id="slide18" role="group" aria-roledescription="slide" aria-label="Combinación de celdas" aria-hidden="true">
+        <div class="slide-number">18 / 20</div>
+        <h2>Combinación de Celdas en Tablas</h2>
+        <div class="rendered-example">
+            <table>
+                <tr>
+                    <th colspan="2">Información Personal</th>
+                </tr>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Juan Pérez</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Contacto</td>
+                    <td>juan@email.com</td>
+                </tr>
+                <tr>
+                    <td>+34 123 456 789</td>
+                </tr>
+            </table>
+        </div>
+        <div class="example-box">
+            <span class="example-title">Código HTML:</span>
+            <pre><code>&lt;tr&gt;
+  &lt;th colspan="2"&gt;Información Personal&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td rowspan="2"&gt;Contacto&lt;/td&gt;
+  &lt;td&gt;juan@email.com&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+        </div>
+    </section>
+
+    <!-- ========== Diapositiva 19 ========== -->
+    <section class="slide" id="slide19" role="group" aria-roledescription="slide" aria-label="Resumen y conclusiones" aria-hidden="true">
+        <div class="slide-number">19 / 20</div>
+        <h2>Resumen y Conclusiones</h2>
+        <ul>
+            <li><span class="highlight">HTML es el esqueleto de la web</span>, proporcionando la estructura fundamental de cualquier página.</li>
+            <li>La separación entre <span class="highlight"><code>&lt;head&gt;</code> (metadatos)</span> y <span class="highlight"><code>&lt;body&gt;</code> (contenido)</span> es un concepto central.</li>
+            <li>HTML ofrece una gran variedad de etiquetas para <span class="highlight">dar formato al texto, crear listas, enlaces, incrustar contenido multimedia, organizar datos en tablas y recoger información mediante formularios</span>.</li>
+            <li>Siempre prioriza la <span class="highlight">semántica</span> y el uso correcto de las etiquetas para mejorar accesibilidad y SEO.</li>
+        </ul>
+    </section>
+
+    <!-- ========== Diapositiva 20 ========== -->
+    <section class="slide" id="slide20" role="group" aria-roledescription="slide" aria-label="Preguntas" aria-hidden="true">
+        <div class="slide-number">20 / 20</div>
+        <h2 style="text-align:center; font-size:2rem">¿Preguntas?</h2>
+        <p class="center">(Espacio para discusión)</p>
+    </section>
+</main>
+
+<footer class="progress-wrap" aria-label="Pie de página" style="margin-top:.25rem">
+    <small class="counter">Usa ←/→, AvPág/RePág, Home/End, o toca para avanzar/retroceder. Estado guardado en el navegador.</small>
+</footer>
+
+<style>
+    /* Auxiliares específicos que dependen del orden del CSS */
+    .box-info { background:#e3f2fd; padding:15px; border-radius:8px; margin:10px 0; }
+    .box-note { background:#f3e5f5; padding:15px; border-radius:8px; margin:10px 0; }
+</style>
+
+<script>
+    // ====== Estado y elementos ======
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    const elCurrent = document.getElementById('current');
+    const elTotal = document.getElementById('total');
+    const btnPrev = document.querySelector('.btn-prev');
+    const btnNext = document.querySelector('.btn-next');
+    const barFill = document.querySelector('.progress-bar .fill');
+    const themeBtn = document.getElementById('themeToggle');
+    elTotal.textContent = totalSlides;
+
+    // ====== Inicio: hash o localStorage ======
+    function getStartSlide(){
+        const fromHash = Number(location.hash.replace('#/','')) || null;
+        const fromStorage = Number(localStorage.getItem('slide')) || null;
+        return Math.min(Math.max((fromHash ?? fromStorage ?? 1), 1), totalSlides);
+    }
+    let current = getStartSlide();
+
+    // ====== Mostrar slide ======
+    function showSlide(n){
+        slides.forEach((s,i)=>{
+            const active = (i+1) === n;
+            s.classList.toggle('active', active);
+            s.toggleAttribute('inert', !active);
+            s.setAttribute('aria-hidden', String(!active));
+            s.toggleAttribute('aria-current', active);
+        });
+        current = n;
+        elCurrent.textContent = n;
+        const pct = ((n-1)/(totalSlides-1))*100;
+        barFill.style.width = pct + '%';
+        btnPrev.disabled = n === 1;
+        btnNext.disabled = n === totalSlides;
+        // URL + persistencia
+        location.replace('#/' + n);
+        localStorage.setItem('slide', String(n));
+    }
+
+    function next(){ if(current < totalSlides) showSlide(current+1); }
+    function prev(){ if(current > 1) showSlide(current-1); }
+
+    // ====== Gestos táctiles básicos ======
+    let startX=null;
+    document.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', e=>{
+        if(startX==null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if(Math.abs(dx) > 50){ dx<0 ? next() : prev(); }
+        startX=null;
+    }, {passive:true});
+
+    // ====== Teclado ======
+    document.addEventListener('keydown', (e)=>{
+        if(['ArrowRight','PageDown',' '].includes(e.key)){ next(); e.preventDefault(); }
+        else if(['ArrowLeft','PageUp'].includes(e.key)){ prev(); e.preventDefault(); }
+        else if(e.key==='Home'){ showSlide(1); e.preventDefault(); }
+        else if(e.key==='End'){ showSlide(totalSlides); e.preventDefault(); }
+        else if(e.key==='Escape'){ showSlide(1); }
+    });
+
+    // ====== Botones ======
+    btnNext.addEventListener('click', next);
+    btnPrev.addEventListener('click', prev);
+
+    // ====== Navegar por hash manualmente (p.ej. al pegar enlace) ======
+    window.addEventListener('hashchange', ()=>{
+        const n = Number(location.hash.replace('#/',''));
+        if(!Number.isNaN(n) && n>=1 && n<=totalSlides && n!==current){ showSlide(n); }
+    });
+
+    // ====== Copiar código ======
+    document.querySelectorAll('pre > code').forEach(code=>{
+        const pre = code.parentElement;
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.textContent = 'Copiar'; btn.className = 'copy-btn';
+        pre.appendChild(btn);
+        btn.addEventListener('click', async ()=>{
+            try{ await navigator.clipboard.writeText(code.innerText); btn.textContent = '¡Copiado!'; setTimeout(()=>btn.textContent='Copiar', 1200); }
+            catch{ btn.textContent = 'Error'; }
+        });
+    });
+
+    // ====== Tema claro/oscuro manual ======
+    const THEME_KEY = 'theme';
+    const applyTheme = (m)=>document.documentElement.dataset.theme = m;
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved){ applyTheme(saved); themeBtn.setAttribute('aria-pressed', String(saved==='dark')); }
+
+    themeBtn.addEventListener('click', ()=>{
+        const isDark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const newTheme = isDark ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem(THEME_KEY, newTheme);
+        themeBtn.setAttribute('aria-pressed', String(newTheme==='dark'));
+    });
+
+    // ====== Inicializar ======
+    showSlide(current);
+</script>
+</body>
+</html>
