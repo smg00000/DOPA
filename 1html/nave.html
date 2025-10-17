@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STAR PLATINUM</title>
 
-    <div class="cuadraito1"  style="text-align: center;">
-        <h1>STAR PLATINUM</h1>
+    <div class="cuadraito1"  style="text-align: center; color: white;">
+        <h1 class="Titulo">STAR PLATINUM</h1>
 
-        <table align="center" border="1" style="border-collapse: collapse; width: 60%; text-align: center;">
+        <style>
+            .Titulo {
+                margin-top: 0px;
+                margin-bottom: 25px;
+                letter-spacing: 10px;
+                font-size: 67px;
+            }
+
+        </style>
+    </div>
+
+    <div class="cuadraito2">
+
+        <h2 style="text-align: center; color: white;font-size: 35px;letter-spacing: 10px;">HORARIO</h2>
+        <table align="center" border="1" style="border-spacing: 15px; width: 60%; text-align: center; color: white;margin-bottom: 35px;border: 2px solid white; border-radius: 20px;">
             <tr>
                 <th>Hora</th>
 
@@ -22,7 +36,7 @@
             <tr>
                 <td>8:00 AM</td>
 
-                <td>Mantenimiento de la Electricidad</td>
+                <td>Mantenimiento de Electricidad</td>
                 <td colspan="4">Selección de destinos y Navegación </td>
             </tr>
 
@@ -32,17 +46,18 @@
                 <td rowspan="2">Carga y Mantenimiento de motores</td>
                 <td>Mantenimiento del Reactor</td>
                 <td>Mantenimiento del sistema de ventilación</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
+                <td>Mantenimiento del Reactor</td>
+                <td>Descarga del almacén</td>
+
             </tr>
 
             <tr>
                 <td>10:00 AM</td>
 
                 <td>Carga en el almacén</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
+                <td>Mantenimiento de Electricidad</td>
+                <td rowspan="2">Carga y Mantenimiento de motores</td>
+                <td>Mantenimiento de escudos</td>
             </tr>
 
             <tr>
@@ -50,9 +65,8 @@
 
                 <td>Mantenimiento de escudos</td>
                 <td> Mantenimiento sistemas de seguridad</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
+                <td>Tirar la basura</td>
+                <td>Mantenimiento de armas</td>
             </tr>
 
             <tr>
@@ -64,11 +78,11 @@
             <tr>
                 <td>13:00 PM</td>
 
-                <td>Mantenimiento de armas</td>
                 <td>Mantenimiento de comunicaciones</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
+                <td>Gestion de administración</td>
+                <td rowspan="2">Entrenamiento fisico</td>
+                <td>Investigación en el laboratorio</td>
+                <td rowspan="2">Reunión semanal</td>
             </tr>
 
             <tr>
@@ -76,9 +90,7 @@
 
                 <td>Mantenimiento de controles de navegación</td>
                 <td>Investigación en el laboratorio</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
-                <td>Hora 1</td>
+                <td>Limpieza general</td>
             </tr>
 
             <tr>
@@ -87,10 +99,112 @@
                 <td colspan="5">Chequeo Médico</td>
             </tr>
         </table>
-    
-        https://i.imgur.com/vBXMRom.png
-
     </div>
+
+<style>
+    .cuadraito2 {
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+    }
+</style>
+    
+<h2 style="margin-top: 15px; color: white; text-align: center;">OBJETIVOS</h2>
+<div class="cuadrolista" style="color: white; ">
+    <ul>Lista del almacén
+
+        <li>Alimentos</li>
+    <ul>
+        <li>Agua</li>
+        <li>Pan</li>
+        <li>Macarrones</li>
+    </ul>
+
+    <li>Combustibles</li>
+    <ul>
+        <li>Gasolina</li>
+        <li>Petroleo</li>
+        <li>Bateía</li>
+    </ul>
+
+    <li>Armamento</li>
+    <ul>
+        <li>Munición</li>
+        <li>Explosivos</li>
+        <li>Escudos</li>
+    </ul>
+
+    <li>Suministros médicos</li>
+    <ul>
+        <li>Antibióticos</li>
+        <li>Vendas</li>
+        <li>Pastillas</li>
+    </ul>
+
+    <li>Suministros generales</li>
+    <ul>
+        <li>Servilletas</li>
+        <li>Vasos</li>
+        <li>Ropa</li>
+    </ul>
+
+</ul>
+</div>
+
+<style>
+    ul {
+    width: fit-content; 
+    margin: 0 auto; 
+    text-align: left; 
+    font-size: 25px;
+}
+    li {
+        margin-top: 15px;
+        font-size: 20px;
+    }
+
+    .cuadrolista {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+    }
+</style>
+
+<style>
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(270deg, #6a0dad, #0000ff);
+        background-size: 400% 400%;
+        background-attachment: scroll;
+        animation: gradient 10s ease infinite;
+        filter: brightness(1.2) saturate(1.4);
+}
+
+@keyframes gradient {
+    0% {
+background-position: 0% 50%;
+}
+    50% {
+    background-position: 100% 50%;
+}
+    100% {
+background-position: 0% 50%;
+    }
+}
+
+* {
+        background-color: transparent;
+    }
+</style>
 
 </head>
 <body>
