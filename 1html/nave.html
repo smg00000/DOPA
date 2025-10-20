@@ -22,7 +22,7 @@
     <div class="cuadraito2">
 
         <h2 style="text-align: center; color: white;font-size: 35px;letter-spacing: 10px;">HORARIO</h2>
-        <table align="center" border="1" style="border-spacing: 15px; width: 60%; text-align: center; color: white;margin-bottom: 35px;border: 2px solid white; border-radius: 20px;">
+        <table align="center" border="1" style="border-spacing: 25px; width: 80%; text-align: center; color: white;margin-bottom: 35px;border: 2px solid white; border-radius: 20px;">
             <tr>
                 <th>Hora</th>
 
@@ -111,7 +111,7 @@
     }
 </style>
     
-<h2 style="margin-top: 15px; color: white; text-align: center;">OBJETIVOS</h2>
+<h2 style="margin-top: 15px; color: white; text-align: center;">Lista de Carga</h2>
 <div class="cuadrolista" style="color: white; ">
     <ul>Lista del almacén
 
@@ -151,23 +151,22 @@
     </ul>
 
 </ul>
-</div>
 
 <style>
     ul {
     width: fit-content; 
     margin: 0 auto; 
-    text-align: left; 
+    text-align: center; 
     font-size: 25px;
 }
     li {
         margin-top: 15px;
         font-size: 20px;
+        text-align: left;
     }
 
     .cuadrolista {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: block;
         border: 3px solid white;
         padding: 5px;
         width: 800px;
@@ -175,6 +174,106 @@
         border-radius: 30px;
     }
 </style>
+
+
+</div>
+
+<h2 style="margin-top: 15px; color: white; text-align: center;">Objetivos de la misión</h2>
+<div class="cuadrolista2">
+    <ol>
+        <li>Seleccion del planeta</li>
+        <li>Navegación</li>
+        <li>Extracción del platino</li>
+        <li>Vender en el mercado</li>
+    </ol>
+
+    <style>
+        ol {
+        width: fit-content; 
+        margin: 0 auto; 
+        text-align: left; 
+        font-size: 25px;
+    }
+    .cuadrolista2 {
+        display: block;
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+        color: white;
+    }
+</style>
+</div>
+
+<h2 style="margin-top: 30px; color: white; text-align: center;">Glosario de Star Platinum</h2>
+<div class="cuadrolista3">
+    <dl style="margin-top: 15px;">
+        <dt>Parar el tiempo</dt>
+        <dd>Star Platinum puede parar el tiempo y solo las personas dentro de la nave podran moverse y ser cosciente hasta 10 segundos</dd>
+    </dl>
+
+    <dl>
+        <dt>Hiperespacio</dt>
+        <dd>Star Platinum puede usar el hiperespacio para moverse a velocidad muy alta para distancias largas</dd>
+    </dl>
+
+    <dl>
+        <dt>Cañon de Protones Inverso</dt>
+        <dd>El cañon de protones inverso le quita los protones a las moleculas que sean impactadas, causando gran destrucción</dd>
+    </dl>
+
+<style>
+    dt {
+        text-align: center;
+        font-size: 25px;
+    }
+
+    dd {
+        text-align: center;
+        margin: 20px;
+        font-size: 18px;
+    }
+
+    .cuadrolista3 {
+        display: block;
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+        color: white;
+    }
+</style>
+
+</div>
+
+<div>
+    <form>
+        <fieldset>
+            <legend>Información Personal</legend>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="cargo" required>
+
+        <label for="cargo">Cargo:</label>
+        <input type="text" id="cargo" name="cargo" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>Información de la misión</legend>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+
+        <label for="fecha">Estado de la misión:</label>
+        <input type="date" id="fecha" name="fecha" required>
+    </fieldset>
+    </form>
+</div>
+
+
 
 <style>
     html {
