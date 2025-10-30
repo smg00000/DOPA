@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STAR PLATINUM</title>
 
-    <div class="cuadraito1"  style="text-align: center;">
+    <div class="cuadraito1"  style="text-align: center; color: white;">
         <h1 class="Titulo">STAR PLATINUM</h1>
 
         <style>
@@ -19,10 +19,10 @@
         </style>
     </div>
 
-    <div>
+    <div class="cuadraito2">
 
-        <h2 style="text-align: center;font-size: 35px;letter-spacing: 10px;">HORARIO</h2>
-        <table align="center" border="1" style="border-spacing: 25px; width: 80%; text-align: center;;margin-bottom: 35px;border: 2px solid white; border-radius: 20px;">
+        <h2 style="text-align: center; color: white;font-size: 35px;letter-spacing: 10px;">HORARIO</h2>
+        <table align="center" border="1" style="border-spacing: 25px; width: 80%; text-align: center; color: white;margin-bottom: 35px;border: 2px solid white; border-radius: 20px;">
             <tr>
                 <th>Hora</th>
 
@@ -100,9 +100,19 @@
             </tr>
         </table>
     </div>
+
+<style>
+    .cuadraito2 {
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+    }
+</style>
     
-<h2 style="margin-top: 15px;text-align: left;">Lista de Carga</h2>
-<div style="color: white; ">
+<h2 style="margin-top: 15px; color: white; text-align: center;">Lista de Carga</h2>
+<div class="cuadrolista" style="color: white; ">
     <ul>Lista del almacén
 
         <li>Alimentos</li>
@@ -144,8 +154,9 @@
 
 <style>
     ul {
+    width: fit-content; 
     margin: 0 auto; 
-    text-align: left; 
+    text-align: center; 
     font-size: 25px;
 }
     li {
@@ -153,12 +164,21 @@
         font-size: 20px;
         text-align: left;
     }
+
+    .cuadrolista {
+        display: block;
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+    }
 </style>
 
 
 </div>
 
-<h2 style="margin-top: 15px;">Objetivos de la misión</h2>
+<h2 style="margin-top: 15px; color: white; text-align: center;">Objetivos de la misión</h2>
 <div class="cuadrolista2">
     <ol>
         <li>Seleccion del planeta</li>
@@ -169,14 +189,24 @@
 
     <style>
         ol {
+        width: fit-content; 
         margin: 0 auto; 
         text-align: left; 
         font-size: 25px;
     }
+    .cuadrolista2 {
+        display: block;
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+        color: white;
+    }
 </style>
 </div>
 
-<h2 style="margin-top: 30px;">Glosario de Star Platinum</h2>
+<h2 style="margin-top: 30px; color: white; text-align: center;">Glosario de Star Platinum</h2>
 <div class="cuadrolista3">
     <dl style="margin-top: 15px;">
         <dt>Parar el tiempo</dt>
@@ -195,20 +225,30 @@
 
 <style>
     dt {
-        text-align: left;
+        text-align: center;
         font-size: 25px;
     }
 
     dd {
-        text-align: left;
+        text-align: center;
         margin: 20px;
         font-size: 18px;
+    }
+
+    .cuadrolista3 {
+        display: block;
+        border: 3px solid white;
+        padding: 5px;
+        width: 800px;
+        margin: 30px auto;
+        border-radius: 30px;
+        color: white;
     }
 </style>
 
 </div>
 
-<div style="text-align: left;">
+<div style="text-align: center;">
     <form>
         <fieldset style="max-width: 1500px;">
             <legend>Información Personal</legend>
@@ -227,53 +267,41 @@
         <label for="fecha">Fecha:</label>
         <input type="date" id="fecha" name="fecha" required>
 
-        <label for="Estado">Estado de la misión:</label>
-        <select>
-            <option value="Nominal">Nominal</option>
-            <option value="Alerta Amarilla">Alerta Amarilla</option>
-            <option value="Alerta Roja">Alerta Roja</option>
-        </select>
-        
-        <label for="Revision">Revisión</label>
-        <label><input type="checkbox" id="revision" name="revision" value="Check medico" required>Estado Medico</label>
-        <label><input type="checkbox" id="revision" name="revision" value="Motores" required>Motores</label>
-        <label><input type="checkbox" id="revision" name="revision" value="Electricidad" required>Electricidad</label>
-        <label><input type="checkbox" id="revision" name="revision" value="Comuinicaciones" required>Comunicaciones</label>
-
-        <label for="Prioridad">Prioridad del informe:</label>
-        <input type="radio" name="Prioridad" value="baja"> Baja
-        <input type="radio" name="Prioridad" value="media"> Media
-        <input type="radio" name="Prioridad" value="alta"> Alta
-        <input type="radio" name="Prioridad" value="urgente"> Urgente
+        <label for="fecha">Estado de la misión:</label>
+        <input type="date" id="fecha" name="fecha" required>
     </fieldset>
-
-    <fieldset>
-        <legend>Resumen</legend>
-        <label for="Resumen">Resumen del informe</label>
-        <textarea></textarea>
-    </fieldset>
-
     </form>
-
-<style>
-    form {
-    display: flex;
-    flex-direction: column;
-    }
-    label {
-        display: block;
-    }
-</style>
 </div>
 
+
+
 <style>
-    Html, body {
-        background-color: black;
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(270deg, #6a0dad, #0000ff);
+        background-size: 400% 400%;
+        background-attachment: scroll;
+        animation: gradient 10s ease infinite;
+        filter: brightness(1.2) saturate(1.4);
+}
+
+@keyframes gradient {
+    0% {
+background-position: 0% 50%;
+}
+    50% {
+    background-position: 100% 50%;
+}
+    100% {
+background-position: 0% 50%;
     }
-    
-    * {
+}
+
+* {
         background-color: transparent;
-        color: white;
     }
 </style>
 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard del Jugador</title>
+    <link rel="stylesheet" href="hojaestilo.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard del Jugador</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#perfil">Perfil</a></li>
+            <li><a href="#estadisticas">Estadísticas</a></li>
+            <li><a href="#configuracion">Configuración</a></li>
+            <li><a href="#ajedrez">Ajedrez</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="card">
+            <h2>Estadisticas de Partida</h2>
+            <div class="imagen">
+            <img src="https://static-resource.np.community.playstation.net/avatar/SCEI/I0034.png">
+            <div class="nivel">Nvl. 67</div>
+            </div>
+            <table border="1" class="tabla1">
+    <thead>
+    <tr>
+            <th>Modo de Juego</th>
+            <th>Victorias</th>
+            <th>Derrotas</th>
+            <th>K/D Ratio</th>
+            <th>Tiempo Jugado (Total)</th>
+    </tr>
+        </thead>
+        <tbody>
+    <tr>
+        <td>Duelo 1v1</td>
+        <td>67</td>
+        <td>33</td>
+        <td>2.2</td>
+        <td>15 Horas</td>
+    </tr>
+    <tr>
+        <td>Combate a muerte</td>
+        <td>89</td>
+        <td>156</td>
+        <td>2.41</td>
+        <td>20 horas</td>
+    </tr>
+    <tr>
+        <td>Combate por equipos</td>
+        <td>80</td>
+        <td>65</td>
+        <td>1.4</td>
+        <td>10 horas</td>
+    </tr>
+    <tr>
+        <td><strong>Totales</strong></td>
+        <td><strong>236</strong></td>
+        <td><strong>254</strong></td>
+        <td><strong>2.03 (Media)</strong></td>
+        <td>45 horas</td>
+    </tr>
+    </tbody>
+</table>
+    <h2>Inventario Rápido</h2>
+    <dl>
+        <dt>Arma mas usada: VMP
+            <dd>Bajas totales: 321 / KDA: 1.42</dd>
+        </dt>
+
+        <dt>Personaje mas usado: Reaper
+            <dd>Bajas totales: 201 / KDA: 1.72</dd>
+        </dt>
+
+        <dt>Mapa mas jugado: Nuketown
+            <dd>Bajas totales: 106 / KDA: 1.32</dd>
+        </dt>
+    </dl>
+        </section>
+
+    <section class="card">
+        <form>
+    <fieldset>
+        <legend>Información del usuario</legend>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="fecha">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha" name="fecha"><br><br>
+
+        <label for="volumen">Volumen del Juego:</label>
+        <input type="range" id="volumen" name="volumen" min="0" max="100"><br><br>
+
+        <label for="color">Color del Perfil:</label>
+        <input type="color" id="color" name="color"><br><br>
+
+        <label for="psswd">Patrón de Contraseña (4 dígitos):</label>
+        <input type="password" id="psswd" name="psswd" pattern="[0-9]{4}" title="Debe contener exactamente 4 dígitos numéricos"><br><br>
+
+        <input type="checkbox" id="terminos" name="terminos" required>
+        <label for="terminos">Acepto los términos</label><br><br>
+
+        <input type="submit" value="Enviar">
+    </fieldset>
+    </form>
+    </section>
+
+    <section>
+        <h2 class="Tablero">Tablero de Desafíos</h2>
+        <table class="ajedrez">
+    <tbody>
+        <tr>
+        <td>♖</td><td>♘</td><td>♗</td><td>♕</td><td>♔</td><td>♗</td><td>♘</td><td>♖</td>
+        </tr>
+
+        <tr>
+        <td>♙</td><td>♙</td><td>♙</td><td>♙</td><td>♙</td><td>♙</td><td>♙</td><td>♙</td>
+        </tr>
+
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+
+        <tr>
+        <td>♟</td><td>♟</td><td>♟</td><td>♟</td><td>♟</td><td>♟</td><td>♟</td><td>♟</td>
+        </tr>
+        
+        <tr>
+        <td>♜</td><td>♞</td><td>♝</td><td>♛</td><td>♚</td><td>♝</td><td>♞</td><td>♜</td>
+        </tr>
+
+    </tbody>
+    </table>
+
+</body>
+</html>
+    </section>
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>
